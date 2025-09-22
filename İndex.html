@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.C. Sağlık Bakanlığı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Genel Stiller */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #0056b3;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: #003366;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #0056b3;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background-color: #003366;
+            color: white;
+        }
+        
+        /* Üst Bilgi */
+        .top-header {
+            background-color: #e6f2ff;
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px solid #d0e5ff;
+        }
+        
+        .top-header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .social-links a {
+            margin-left: 15px;
+            font-size: 16px;
+        }
+        
+        /* Navigasyon */
+        .main-header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 60px;
+        }
+        
+        .logo-text {
+            margin-left: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #0056b3;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        .main-nav li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        .main-nav a {
+            color: #0056b3;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 10px 0;
+            display: block;
+        }
+        
+        .main-nav a:hover {
+            color: #003366;
+        }
+        
+        .main-nav a.active {
+            color: #003366;
+            border-bottom: 2px solid #003366;
+        }
+        
+        /* Arama Kutusu */
+        .search-box {
+            display: flex;
+            margin-left: 20px;
+        }
+        
+        .search-box input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            width: 200px;
+        }
+        
+        .search-box button {
+            background: #0056b3;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        /* Slider / Hero Bölümü */
+        .hero-slider {
+            background: linear-gradient(to right, #0056b3, #0073e6);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        /* İçerik Bölümleri */
+        .content-section {
+            padding: 50px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        
+        .section-view-all {
+            color: #0056b3;
+            font-weight: 500;
+        }
+        
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-image {
+            height: 180px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .news-content {
+            padding: 20px;
+        }
+        
+        .news-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #0056b3;
+        }
+        
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        /* Hizmetler */
+        .services {
+            background-color: #e6f2ff;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .service-box {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        
+        .service-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #0056b3;
+        }
+        
+        /* İstatistikler */
+        .stats {
+            background: linear-gradient(to right, #0056b3, #0073e6);
+            color: white;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .stat-item {
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+        }
+        
+        /* Duyurular */
+        .announcements {
+            background-color: #fff8e1;
+        }
+        
+        .announcement-list {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .announcement-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .announcement-item:last-child {
+            border-bottom: none;
+        }
+        
+        .announcement-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        /* Alt Bilgi */
+        .main-footer {
+            background-color: #003366;
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .contact-info {
+            margin-top: 10px;
+        }
+        
+        .contact-info p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: #4da6ff;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Tasarım */
+        @media (max-width: 992px) {
+            .news-grid,
+            .services-grid,
+            .stats-grid,
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: column;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .main-nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .main-nav li {
+                margin: 5px 10px;
+            }
+            
+            .search-box {
+                margin: 15px 0 0 0;
+                width: 100%;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .news-grid,
+            .services-grid,
+            .stats-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Üst Bilgi -->
+    <header class="top-header">
+        <div class="container top-header-inner">
+            <div>Resmi kurum sitesi - Sağlık hizmetleri ve haberler</div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Ana Navigasyon -->
+    <header class="main-header">
+        <div class="container header-inner">
+            <div class="logo">
+                <div style="width: 60px; height: 60px; background: #0056b3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">SB</div>
+                <div class="logo-text">T.C. Sağlık Bakanlığı</div>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Ana Sayfa</a></li>
+                    <li><a href="#">Haberler</a></li>
+                    <li><a href="#">Hizmetler</a></li>
+                    <li><a href="#">Kurumsal</a></li>
+                    <li><a href="#">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="search-box">
+                <input type="text" placeholder="Site içi arama...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Slider / Hero Bölümü -->
+    <section class="hero-slider">
+        <div class="container hero-content">
+            <h1>Sağlık Bakanlığı'ndan Güncel Haberler ve Duyurular</h1>
+            <p>Halk sağlığı için çalışmalarımız tüm hızıyla devam ediyor. Güncel gelişmeleri takip etmek için bizi izlemeye devam edin.</p>
+            <a href="#" class="btn">Detaylı Bilgi</a>
+        </div>
+    </section>
+    
+    <!-- Haberler Bölümü -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Güncel Haberler</h2>
+                <a href="#" class="section-view-all">Tüm Haberler <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-image" style="background-color: #5a9bd5;"></div>
+                    <div class="news-content">
+                        <div class="news-date">15 Eylül 2023</div>
+                        <h3 class="news-title">Yeni Hastane Projesi Hayata Geçiriliyor</h3>
+                        <p class="news-excerpt">İstanbul'da başlayan yeni şehir hastanesi projesi ile vatandaşlara daha kaliteli sağlık hizmeti sunulması hedefleniyor.</p>
+                        <a href="#">Devamını Oku</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image" style="background-color: #70ad47;"></div>
+                    <div class="news-content">
+                        <div class="news-date">12 Eylül 2023</div>
+                        <h3 class="news-title">Aşı Kampanyası Devam Ediyor</h3>
+                        <p class="news-excerpt">Mevsimsel grip aşısı için randevu alma süreci başladı. Risk grubundaki vatandaşlarımız aile hekimlerine başvurabilir.</p>
+                        <a href="#">Devamını Oku</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-image" style="background-color: #ffc000;"></div>
+                    <div class="news-content">
+                        <div class="news-date">10 Eylül 2023</div>
+                        <h3 class="news-title">Dijital Sağlık Uygulaması Güncellendi</h3>
+                        <p class="news-excerpt">e-Nabız uygulaması yeni özelliklerle kullanıcıların hizmetinde. Yeni arayüz ve gelişmiş özelliklerle daha kullanışlı hale geldi.</p>
+                        <a href="#">Devamını Oku</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hizmetler Bölümü -->
+    <section class="content-section services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Hizmetlerimiz</h2>
+                <a href="#" class="section-view-all">Tüm Hizmetler <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="services-grid">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3 class="service-title">Sağlık Tesisleri</h3>
+                    <p>Hastane ve sağlık kuruluşları hakkında bilgiler, iletişim ve randevu</p>
+                </div>
+                
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3 class="service-title">İlaç ve Eczacılık</h3>
+                    <p>İlaç bilgi sistemi ve eczacılık hizmetleri</p>
+                </div>
+                
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="service-title">Dijital Hizmetler</h3>
+                    <p>e-Nabız ve diğer dijital sağlık hizmetleri</p>
+                </div>
+                
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="service-title">İstatistikler</h3>
+                    <p>Sağlık istatistikleri ve raporları</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- İstatistikler Bölümü -->
+    <section class="content-section stats">
+        <div class="container">
+            <h2 class="section-title" style="border-bottom-color: white; color: white;">Sağlık İstatistikleri</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1.250</div>
+                    <div class="stat-label">Aktif Hastane</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">25.500</div>
+                    <div class="stat-label">Aile Hekimi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">210.000</div>
+                    <div class="stat-label">Hemşire</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">45 Milyon</div>
+                    <div class="stat-label">e-Nabız Kullanıcısı</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Duyurular Bölümü -->
+    <section class="content-section announcements">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Duyurular</h2>
+                <a href="#" class="section-view-all">Tüm Duyurular <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="announcement-list">
+                <div class="announcement-item">
+                    <div class="announcement-date">18 Eylül 2023</div>
+                    <h3>Sağlık Personeli Alım İlanı</h3>
+                    <p>Bakanlığımıza bağlı sağlık tesislerinde çalıştırılmak üzere 500 hemşire alımı yapılacaktır.</p>
+                </div>
+                <div class="announcement-item">
+                    <div class="announcement-date">16 Eylül 2023</div>
+                    <h3>Mobil Sağlık Tarama Araçları Hizmete Girdi</h3>
+                    <p>Ülke genelinde 50 mobil sağlık tarama aracı vatandaşlarımızın hizmetine sunulmuştur.</p>
+                </div>
+                <div class="announcement-item">
+                    <div class="announcement-date">14 Eylül 2023</div>
+                    <h3>Tel-Randevu Sistemi Güncellendi</h3>
+                    <p>182 randevu hatası üzerinden yapılan randevu işlemleri kolaylaştırıldı.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Alt Bilgi -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-links">
+                    <h4>Kurumsal</h4>
+                    <ul>
+                        <li><a href="#">Bakanlık</a></li>
+                        <li><a href="#">Teşkilat</a></li>
+                        <li><a href="#">Bağlı Kuruluşlar</a></li>
+                        <li><a href="#">İdari Birimler</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Hizmetler</h4>
+                    <ul>
+                        <li><a href="#">Sağlık Hizmetleri</a></li>
+                        <li><a href="#">İlaç ve Eczacılık</a></li>
+                        <li><a href="#">Dijital Hizmetler</a></li>
+                        <li><a href="#">İstatistikler</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>İletişim</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Üniversiteler Mah. Dumlupınar Blv. 6001. Cad. No:9 Çankaya/ANKARA</p>
+                        <p><i class="fas fa-phone"></i> 0 312 585 00 00</p>
+                        <p><i class="fas fa-envelope"></i> info@saglik.gov.tr</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 T.C. Sağlık Bakanlığı. Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Basit bir slider için JavaScript kodu
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero bölümü için basit bir yazı animasyonu
+            const heroTitle = document.querySelector('.hero-content h1');
+            if (heroTitle) {
+                heroTitle.style.opacity = 0;
+                setTimeout(() => {
+                    heroTitle.style.transition = 'opacity 1s ease';
+                    heroTitle.style.opacity = 1;
+                }, 300);
+            }
+            
+            // İstatistikler için sayma animasyonu
+            const statNumbers = document.querySelectorAll('.stat-number');
+            if (statNumbers.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const target = entry.target;
+                            const finalValue = parseInt(target.textContent);
+                            let currentValue = 0;
+                            const duration = 2000; // 2 saniye
+                            const increment = finalValue / (duration / 16); // 60fps
+                            
+                            const timer = setInterval(() => {
+                                currentValue += increment;
+                                if (currentValue >= finalValue) {
+                                    clearInterval(timer);
+                                    currentValue = finalValue;
+                                }
+                                target.textContent = Math.round(currentValue).toLocaleString();
+                            }, 16);
+                            
+                            observer.unobserve(target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                statNumbers.forEach(stat => {
+                    observer.observe(stat);
+                });
+            }
+            
+            console.log('T.C. Sağlık Bakanlığı web sitesi yüklendi');
+        });
+    </script>
+</body>
+</html>
