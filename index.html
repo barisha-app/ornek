@@ -153,7 +153,7 @@
         
         /* Slider / Hero Bölümü */
         .hero-slider {
-            background: linear-gradient(to right, #0056b3, #0073e6);
+            background: linear-gradient(rgba(0, 86, 179, 0.8), rgba(0, 86, 179, 0.8)), url('https://www.saglik.gov.tr/Uploads/SaglikHizmetleriGenelMudurlugu/saglik-bakanligi.jpg') center/cover;
             color: white;
             padding: 60px 0;
             text-align: center;
@@ -464,7 +464,7 @@
     <header class="main-header">
         <div class="container header-inner">
             <div class="logo">
-                <div style="width: 60px; height: 60px; background: #0056b3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold;">SB</div>
+                <img src="https://www.saglik.gov.tr/Images/SaglikBakanligiLogo.png" alt="T.C. Sağlık Bakanlığı Logo">
                 <div class="logo-text">T.C. Sağlık Bakanlığı</div>
             </div>
             <nav class="main-nav">
@@ -501,7 +501,7 @@
             </div>
             <div class="news-grid">
                 <div class="news-card">
-                    <div class="news-image" style="background-color: #5a9bd5;"></div>
+                    <div class="news-image" style="background-image: url('https://www.saglik.gov.tr/Uploads/SaglikHizmetleriGenelMudurlugu/saglik-bakanligi-hastane.jpg');"></div>
                     <div class="news-content">
                         <div class="news-date">15 Eylül 2023</div>
                         <h3 class="news-title">Yeni Hastane Projesi Hayata Geçiriliyor</h3>
@@ -511,7 +511,7 @@
                 </div>
                 
                 <div class="news-card">
-                    <div class="news-image" style="background-color: #70ad47;"></div>
+                    <div class="news-image" style="background-image: url('https://www.saglik.gov.tr/Uploads/SaglikHizmetleriGenelMudurlugu/asi-kampanyasi.jpg');"></div>
                     <div class="news-content">
                         <div class="news-date">12 Eylül 2023</div>
                         <h3 class="news-title">Aşı Kampanyası Devam Ediyor</h3>
@@ -521,7 +521,7 @@
                 </div>
                 
                 <div class="news-card">
-                    <div class="news-image" style="background-color: #ffc000;"></div>
+                    <div class="news-image" style="background-image: url('https://www.saglik.gov.tr/Uploads/SaglikHizmetleriGenelMudurlugu/dijital-saglik.jpg');"></div>
                     <div class="news-content">
                         <div class="news-date">10 Eylül 2023</div>
                         <h3 class="news-title">Dijital Sağlık Uygulaması Güncellendi</h3>
@@ -688,7 +688,7 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             const target = entry.target;
-                            const finalValue = parseInt(target.textContent);
+                            const finalValue = parseInt(target.textContent.replace(' Milyon', '000000').replace(' ', ''));
                             let currentValue = 0;
                             const duration = 2000; // 2 saniye
                             const increment = finalValue / (duration / 16); // 60fps
@@ -698,8 +698,18 @@
                                 if (currentValue >= finalValue) {
                                     clearInterval(timer);
                                     currentValue = finalValue;
+                                    if (finalValue === 45000000) {
+                                        target.textContent = '45 Milyon';
+                                    } else {
+                                        target.textContent = Math.round(currentValue).toLocaleString();
+                                    }
+                                } else {
+                                    if (finalValue === 45000000 && currentValue > 44000000) {
+                                        target.textContent = '45 Milyon';
+                                    } else {
+                                        target.textContent = Math.round(currentValue).toLocaleString();
+                                    }
                                 }
-                                target.textContent = Math.round(currentValue).toLocaleString();
                             }, 16);
                             
                             observer.unobserve(target);
