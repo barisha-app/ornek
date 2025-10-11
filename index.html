@@ -226,11 +226,44 @@
             transform: scale(1.05);
         }
         
+        .admin-login {
+            padding: 4rem 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .admin-panel {
+            padding: 2rem 0;
+            background-color: white;
+        }
+        
+        .admin-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--light-color);
+            border-radius: 10px;
+        }
+        
         footer {
             background-color: var(--dark-color);
             color: white;
             padding: 2rem 0;
             text-align: center;
+        }
+        
+        .hidden {
+            display: none;
         }
         
         @media (max-width: 768px) {
@@ -246,6 +279,11 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            .admin-controls {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
@@ -258,7 +296,7 @@
                     <li><a href="#home">Ana Sayfa</a></li>
                     <li><a href="#upload">Fotoğraf Yükle</a></li>
                     <li><a href="#gallery">Albüm</a></li>
-                    <li><a href="#admin">Yönetim</a></li>
+                    <li><a href="#admin" id="adminLink">Yönetim</a></li>
                 </ul>
             </nav>
         </div>
@@ -335,18 +373,46 @@
             <h2 style="text-align: center; margin-bottom: 2rem;">Albüm</h2>
             <div class="gallery-grid" id="galleryGrid">
                 <!-- Fotoğraflar burada dinamik olarak yüklenecek -->
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
+            </div>
+        </div>
+    </section>
+
+    <section id="admin" class="admin-login">
+        <div class="container">
+            <h2>Yönetim Paneli Girişi</h2>
+            <p>Sadece gelin ve damat albümü görüntüleyebilir.</p>
+            
+            <div class="login-form">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">Kullanıcı Adı</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Şifre</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn">Giriş Yap</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="adminPanel" class="admin-panel hidden">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Yönetim Paneli</h2>
+            
+            <div class="admin-controls">
+                <div>
+                    <button id="logoutBtn" class="btn">Çıkış Yap</button>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
+                <div>
+                    <button id="downloadAllBtn" class="btn">Tüm Fotoğrafları İndir</button>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
-                </div>
+            </div>
+            
+            <div class="gallery-grid" id="adminGalleryGrid">
+                <!-- Yönetim paneli için fotoğraflar -->
             </div>
         </div>
     </section>
@@ -358,35 +424,186 @@
     </footer>
 
     <script>
-        // Basit bir yükleme işlevi (gerçek uygulamada sunucu tarafı işlem gerekir)
+        // Basit bir veritabanı simülasyonu (localStorage kullanarak)
+        const STORAGE_KEY = 'weddingAlbumData';
+        
+        // Uygulama durumu
+        let appState = {
+            isAdminLoggedIn: false,
+            photos: []
+        };
+        
+        // Sayfa yüklendiğinde verileri yükle
+        function loadAppData() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                appState = JSON.parse(savedData);
+            }
+            
+            // Galeriyi yükle
+            loadGalleryItems();
+            
+            // Admin giriş durumunu kontrol et
+            if (appState.isAdminLoggedIn) {
+                showAdminPanel();
+            }
+        }
+        
+        // Verileri kaydet
+        function saveAppData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+        }
+        
+        // Fotoğraf yükleme işlemi
         document.getElementById('uploadForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const name = document.getElementById('name').value;
             const message = document.getElementById('message').value;
-            const file = document.getElementById('file').files[0];
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
             
             if (!file) {
                 alert('Lütfen bir dosya seçin.');
                 return;
             }
             
-            // Burada normalde dosya sunucuya yüklenir
-            // Örnek amaçlı sadece alert gösteriyoruz
-            alert(`Teşekkürler ${name}! Fotoğrafınız yüklendi.`);
-            
-            // Formu temizle
-            document.getElementById('uploadForm').reset();
+            // Dosyayı base64 formatına dönüştür
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const photoData = {
+                    id: Date.now(),
+                    name: name,
+                    message: message,
+                    data: e.target.result,
+                    timestamp: new Date().toISOString(),
+                    type: file.type.startsWith('image/') ? 'image' : 'video'
+                };
+                
+                // Fotoğrafı koleksiyona ekle
+                appState.photos.push(photoData);
+                saveAppData();
+                
+                alert(`Teşekkürler ${name}! Fotoğrafınız yüklendi.`);
+                
+                // Formu temizle
+                document.getElementById('uploadForm').reset();
+            };
+            reader.readAsDataURL(file);
         });
         
-        // Galeri için örnek fotoğraflar ekleme (gerçek uygulamada sunucudan çekilir)
+        // Galeri için fotoğrafları yükle
         function loadGalleryItems() {
-            // Burada normalde sunucudan fotoğraflar çekilir ve galeriye eklenir
-            console.log("Galeri yüklendi");
+            const galleryGrid = document.getElementById('galleryGrid');
+            const adminGalleryGrid = document.getElementById('adminGalleryGrid');
+            
+            // Galeriyi temizle
+            galleryGrid.innerHTML = '';
+            adminGalleryGrid.innerHTML = '';
+            
+            // Eğer admin girişi yapılmışsa tüm fotoğrafları göster
+            if (appState.isAdminLoggedIn) {
+                appState.photos.forEach(photo => {
+                    const galleryItem = createGalleryItem(photo);
+                    adminGalleryGrid.appendChild(galleryItem);
+                });
+            } else {
+                // Normal kullanıcılar için sadece örnek fotoğraflar
+                const samplePhotos = [
+                    { id: 1, data: 'https://via.placeholder.com/300?text=Örnek+Fotoğraf+1', type: 'image' },
+                    { id: 2, data: 'https://via.placeholder.com/300?text=Örnek+Fotoğraf+2', type: 'image' },
+                    { id: 3, data: 'https://via.placeholder.com/300?text=Örnek+Fotoğraf+3', type: 'image' }
+                ];
+                
+                samplePhotos.forEach(photo => {
+                    const galleryItem = createGalleryItem(photo);
+                    galleryGrid.appendChild(galleryItem);
+                });
+            }
         }
         
-        // Sayfa yüklendiğinde galeriyi yükle
-        window.addEventListener('DOMContentLoaded', loadGalleryItems);
+        // Galeri öğesi oluştur
+        function createGalleryItem(photo) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            
+            if (photo.type === 'image') {
+                const img = document.createElement('img');
+                img.src = photo.data;
+                img.alt = 'Yüklenen fotoğraf';
+                galleryItem.appendChild(img);
+            } else {
+                // Video için özel işleme
+                const video = document.createElement('video');
+                video.src = photo.data;
+                video.controls = true;
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'cover';
+                galleryItem.appendChild(video);
+            }
+            
+            return galleryItem;
+        }
+        
+        // Admin giriş işlemi
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Basit kimlik doğrulama (gerçek uygulamada güvenli bir yöntem kullanın)
+            if (username === 'gelindamat' && password === '123456') {
+                appState.isAdminLoggedIn = true;
+                saveAppData();
+                showAdminPanel();
+                alert('Başarıyla giriş yapıldı!');
+            } else {
+                alert('Kullanıcı adı veya şifre hatalı!');
+            }
+        });
+        
+        // Admin panelini göster
+        function showAdminPanel() {
+            document.getElementById('admin').classList.add('hidden');
+            document.getElementById('adminPanel').classList.remove('hidden');
+            document.getElementById('adminLink').textContent = 'Yönetim Paneli';
+            loadGalleryItems();
+        }
+        
+        // Çıkış yap
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            appState.isAdminLoggedIn = false;
+            saveAppData();
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('admin').classList.remove('hidden');
+            document.getElementById('adminLink').textContent = 'Yönetim';
+            loadGalleryItems();
+        });
+        
+        // Tüm fotoğrafları indir
+        document.getElementById('downloadAllBtn').addEventListener('click', function() {
+            if (appState.photos.length === 0) {
+                alert('İndirilecek fotoğraf bulunmamaktadır.');
+                return;
+            }
+            
+            // Her fotoğraf için indirme bağlantısı oluştur
+            appState.photos.forEach((photo, index) => {
+                const link = document.createElement('a');
+                link.href = photo.data;
+                link.download = `düğün_fotoğrafı_${index + 1}.${photo.type === 'image' ? 'jpg' : 'mp4'}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+            
+            alert('Tüm fotoğraflar indiriliyor...');
+        });
+        
+        // Sayfa yüklendiğinde verileri yükle
+        window.addEventListener('DOMContentLoaded', loadAppData);
     </script>
 </body>
 </html>
