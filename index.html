@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechShop - Teknoloji Alışverişin Adresi</title>
+    <title>QR Kodlu Dijital Albüm</title>
     <style>
-        /* Genel Stiller */
+        :root {
+            --primary-color: #e91e63;
+            --secondary-color: #9c27b0;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,840 +20,373 @@
         }
         
         body {
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #f5f5f5;
+            color: var(--dark-color);
             line-height: 1.6;
         }
         
         .container {
-            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 0 20px;
         }
         
-        /* Header */
         header {
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #2c3e50;
-            text-decoration: none;
-        }
-        
-        .logo span {
-            color: #e74c3c;
-        }
-        
-        .search-cart {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .search-box {
-            position: relative;
-        }
-        
-        .search-box input {
-            padding: 10px 40px 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            width: 250px;
-        }
-        
-        .search-box button {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-        }
-        
-        .cart-icon {
-            position: relative;
-            font-size: 24px;
-            color: #2c3e50;
-            text-decoration: none;
-        }
-        
-        .cart-count {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: #e74c3c;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
         }
         
         nav ul {
             display: flex;
+            justify-content: center;
             list-style: none;
         }
         
         nav ul li {
-            margin-left: 25px;
+            margin: 0 15px;
         }
         
         nav ul li a {
+            color: white;
             text-decoration: none;
-            color: #2c3e50;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: opacity 0.3s;
         }
         
         nav ul li a:hover {
-            color: #e74c3c;
+            opacity: 0.8;
         }
         
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #2c3e50;
-        }
-        
-        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            padding: 80px 0;
+            padding: 4rem 0;
             text-align: center;
+            background-color: white;
         }
         
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
         }
         
         .hero p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #666;
+        }
+        
+        .qr-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .qr-code span {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .features {
+            padding: 4rem 0;
+            background-color: var(--light-color);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .upload-section {
+            padding: 4rem 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .upload-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: var(--light-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
         }
         
         .btn {
             display: inline-block;
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 12px 30px;
+            padding: 0.8rem 1.5rem;
+            border: none;
             border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.3s;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
         }
         
         .btn:hover {
-            background-color: #34495e;
+            opacity: 0.9;
         }
         
-        /* Kategoriler */
-        .categories {
-            padding: 50px 0;
+        .gallery {
+            padding: 4rem 0;
+            background-color: var(--light-color);
         }
         
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #2c3e50;
-            margin-bottom: 15px;
-        }
-        
-        .categories-grid {
+        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
         
-        .category-card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .category-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-        }
-        
-        /* Ürünler */
-        .products {
-            padding: 50px 0;
-            background-color: #f1f2f6;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .product-card {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .product-image {
-            height: 200px;
-            background-color: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .product-image img {
-            max-width: 100%;
-            max-height: 160px;
-        }
-        
-        .product-info {
-            padding: 20px;
-        }
-        
-        .product-info h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .product-price {
-            font-size: 20px;
-            font-weight: 700;
-            color: #e74c3c;
-            margin-bottom: 15px;
-        }
-        
-        .product-old-price {
-            text-decoration: line-through;
-            color: #7f8c8d;
-            font-size: 16px;
-            margin-left: 10px;
-        }
-        
-        .add-to-cart {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .add-to-cart:hover {
-            background-color: #2980b9;
-        }
-        
-        /* Kampanyalar */
-        .promotions {
-            padding: 50px 0;
-        }
-        
-        .promotion-banner {
-            background: linear-gradient(135deg, #3498db, #2c3e50);
-            color: white;
-            padding: 40px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .promotion-banner h2 {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 50px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
+        .gallery-item {
             position: relative;
-            padding-bottom: 10px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            aspect-ratio: 1;
         }
         
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 2px;
-            background-color: #e74c3c;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-column ul li a {
-            color: #bdc3c7;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-column ul li a:hover {
-            color: #e74c3c;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bdc3c7;
-            font-size: 14px;
-        }
-        
-        /* Sepet Modal */
-        .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 400px;
-            height: 100%;
-            background-color: white;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-            z-index: 2000;
-            overflow-y: auto;
-        }
-        
-        .cart-header {
-            padding: 20px;
-            background-color: #2c3e50;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .close-cart {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        .cart-items {
-            padding: 20px;
-        }
-        
-        .cart-item {
-            display: flex;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .cart-item-image {
-            width: 80px;
-            height: 80px;
-            background-color: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-        }
-        
-        .cart-item-info {
-            flex: 1;
-        }
-        
-        .cart-item-price {
-            font-weight: 700;
-            color: #e74c3c;
-            margin-top: 5px;
-        }
-        
-        .cart-total {
-            padding: 20px;
-            background-color: #f8f9fa;
-            text-align: center;
-        }
-        
-        .checkout-btn {
+        .gallery-item img {
             width: 100%;
-            padding: 15px;
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
         }
         
-        /* Responsive Tasarım */
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
         @media (max-width: 768px) {
-            .header-container {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .qr-section {
                 flex-direction: column;
-                text-align: center;
-            }
-            
-            .search-cart {
-                margin-top: 15px;
-            }
-            
-            .search-box input {
-                width: 200px;
             }
             
             nav ul {
-                margin-top: 20px;
                 flex-direction: column;
-            }
-            
-            nav ul li {
-                margin: 10px 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                position: absolute;
-                top: 20px;
-                right: 20px;
-            }
-            
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .cart-modal {
-                width: 100%;
+                gap: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="container header-container">
-            <a href="#" class="logo">Tech<span>Shop</span></a>
-            
-            <div class="search-cart">
-                <div class="search-box">
-                    <input type="text" placeholder="Ürün ara...">
-                    <button>🔍</button>
-                </div>
-                <a href="#" class="cart-icon" id="cart-icon">
-                    🛒
-                    <span class="cart-count">0</span>
-                </a>
-            </div>
-            
-            <button class="mobile-menu-btn">☰</button>
+        <div class="container">
+            <div class="logo">Dijital Albüm</div>
             <nav>
                 <ul>
-                    <li><a href="#">Ana Sayfa</a></li>
-                    <li><a href="#categories">Kategoriler</a></li>
-                    <li><a href="#products">Ürünler</a></li>
-                    <li><a href="#promotions">Kampanyalar</a></li>
+                    <li><a href="#home">Ana Sayfa</a></li>
+                    <li><a href="#upload">Fotoğraf Yükle</a></li>
+                    <li><a href="#gallery">Albüm</a></li>
+                    <li><a href="#admin">Yönetim</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <section id="home" class="hero">
         <div class="container">
-            <h1>Teknoloji Alışverişin Yeni Adresi</h1>
-            <p>En yeni teknoloji ürünlerini uygun fiyatlarla bulabileceğiniz güvenilir alışveriş platformu</p>
-            <a href="#products" class="btn">Hemen Alışverişe Başla</a>
-        </div>
-    </section>
-
-    <!-- Kategoriler -->
-    <section id="categories" class="categories">
-        <div class="container">
-            <div class="section-title">
-                <h2>Kategoriler</h2>
-                <p>İlgi alanınıza göre keşfedin</p>
-            </div>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">📱</div>
-                    <h3>Akıllı Telefonlar</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">💻</div>
-                    <h3>Bilgisayarlar</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🎧</div>
-                    <h3>Kulaklıklar</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">⌚</div>
-                    <h3>Akıllı Saatler</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">📺</div>
-                    <h3>Televizyonlar</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🎮</div>
-                    <h3>Oyun Konsolları</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ürünler -->
-    <section id="products" class="products">
-        <div class="container">
-            <div class="section-title">
-                <h2>Popüler Ürünler</h2>
-                <p>En çok satılan teknoloji ürünleri</p>
-            </div>
-            <div class="products-grid">
-                <!-- Ürün 1 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/200" alt="iPhone 14 Pro">
-                    </div>
-                    <div class="product-info">
-                        <h3>iPhone 14 Pro 128GB</h3>
-                        <div class="product-price">34.999 TL <span class="product-old-price">36.999 TL</span></div>
-                        <button class="add-to-cart" data-id="1" data-name="iPhone 14 Pro 128GB" data-price="34999">Sepete Ekle</button>
-                    </div>
-                </div>
-                
-                <!-- Ürün 2 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/200" alt="Samsung Galaxy S23">
-                    </div>
-                    <div class="product-info">
-                        <h3>Samsung Galaxy S23 256GB</h3>
-                        <div class="product-price">24.999 TL <span class="product-old-price">26.999 TL</span></div>
-                        <button class="add-to-cart" data-id="2" data-name="Samsung Galaxy S23 256GB" data-price="24999">Sepete Ekle</button>
-                    </div>
-                </div>
-                
-                <!-- Ürün 3 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/200" alt="MacBook Air">
-                    </div>
-                    <div class="product-info">
-                        <h3>MacBook Air M2 13"</h3>
-                        <div class="product-price">29.999 TL <span class="product-old-price">31.999 TL</span></div>
-                        <button class="add-to-cart" data-id="3" data-name="MacBook Air M2 13" data-price="29999">Sepete Ekle</button>
-                    </div>
-                </div>
-                
-                <!-- Ürün 4 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/200" alt="Sony WH-1000XM4">
-                    </div>
-                    <div class="product-info">
-                        <h3>Sony WH-1000XM4 Kulaklık</h3>
-                        <div class="product-price">5.999 TL <span class="product-old-price">6.499 TL</span></div>
-                        <button class="add-to-cart" data-id="4" data-name="Sony WH-1000XM4 Kulaklık" data-price="5999">Sepete Ekle</button>
-                    </div>
-                </div>
-                
-                <!-- Ürün 5 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/200" alt="Apple Watch Series 8">
-                    </div>
-                    <div class="product-info">
-                        <h3>Apple Watch Series 8 45mm</h3>
-                        <div class="product-price">8.999 TL <span class="product-old-price">9.499 TL</span></div>
-                        <button class="add-to-cart" data-id="5" data-name="Apple Watch Series 8 45mm" data-price="8999">Sepete Ekle</button>
-                    </div>
-                </div>
-                
-                <!-- Ürün 6 -->
-                <div class="product-card">
-                    <div class="product-image">
-                        <img src="https://via.placeholder.com/200" alt="PlayStation 5">
-                    </div>
-                    <div class="product-info">
-                        <h3>PlayStation 5 Standard</h3>
-                        <div class="product-price">14.999 TL <span class="product-old-price">15.999 TL</span></div>
-                        <button class="add-to-cart" data-id="6" data-name="PlayStation 5 Standard" data-price="14999">Sepete Ekle</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Kampanyalar -->
-    <section id="promotions" class="promotions">
-        <div class="container">
-            <div class="section-title">
-                <h2>Özel Kampanyalar</h2>
-                <p>Fırsatları kaçırmayın</p>
-            </div>
+            <h1>QR Kodlu Dijital Albüm</h1>
+            <p>Misafirler çektikleri fotoğraf ve videoları dijital albüme yüklüyor. Daha sonra gelin ve damat tüm anılara tek bir albümden ulaşıyor.</p>
             
-            <div class="promotion-banner">
-                <h2>Kargo Bedava!</h2>
-                <p>200 TL ve üzeri alışverişlerde kargo bedava</p>
-            </div>
-            
-            <div class="promotion-banner" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
-                <h2>İlk Alışverişe Özel %10 İndirim</h2>
-                <p>İlk siparişinizde FIRSAT10 koduyla %10 indirim</p>
+            <div class="qr-section">
+                <div class="qr-code">
+                    <span>QR Kodu Buraya</span>
+                </div>
+                <div>
+                    <h3>Albüme Katılın</h3>
+                    <p>QR kodu okutarak veya aşağıdaki butona tıklayarak albüme fotoğraf yükleyebilirsiniz.</p>
+                    <a href="#upload" class="btn">Fotoğraf Yükle</a>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Nasıl Çalışır?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>QR Kodu Okut</h3>
+                    <p>Telefonunuzla QR kodunu okutun ve albüm sayfasına ulaşın.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📸</div>
+                    <h3>Fotoğraf Yükle</h3>
+                    <p>Çektiğiniz fotoğraf ve videoları kolayca albüme yükleyin.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👰‍♀️🤵‍♂️</div>
+                    <h3>Anılar Biriksin</h3>
+                    <p>Gelin ve damat tüm anılara tek bir albümden ulaşsın.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="upload" class="upload-section">
+        <div class="container">
+            <h2>Fotoğraf/Video Yükle</h2>
+            <p>Albüme katkıda bulunmak için fotoğraf veya video yükleyin.</p>
+            
+            <div class="upload-form">
+                <form id="uploadForm">
+                    <div class="form-group">
+                        <label for="name">Adınız</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mesajınız (İsteğe Bağlı)</label>
+                        <textarea id="message" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="file">Fotoğraf/Video Seçin</label>
+                        <input type="file" id="file" accept="image/*,video/*" required>
+                    </div>
+                    <button type="submit" class="btn">Yükle</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Albüm</h2>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Fotoğraflar burada dinamik olarak yüklenecek -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300" alt="Örnek fotoğraf">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>TechShop</h3>
-                    <p>Teknoloji alışverişinde güvenilir adres. En yeni ürünler, en uygun fiyatlarla.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Hızlı Bağlantılar</h3>
-                    <ul>
-                        <li><a href="#">Ana Sayfa</a></li>
-                        <li><a href="#categories">Kategoriler</a></li>
-                        <li><a href="#products">Ürünler</a></li>
-                        <li><a href="#promotions">Kampanyalar</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Müşteri Hizmetleri</h3>
-                    <ul>
-                        <li><a href="#">Sıkça Sorulan Sorular</a></li>
-                        <li><a href="#">İade ve Değişim</a></li>
-                        <li><a href="#">Kargo Takibi</a></li>
-                        <li><a href="#">İletişim</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>İletişim</h3>
-                    <ul>
-                        <li>📞 0850 850 85 85</li>
-                        <li>✉️ info@techshop.com</li>
-                        <li>📍 İstanbul, Türkiye</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2023 TechShop. Tüm hakları saklıdır.</p>
-            </div>
+            <p>© 2023 Dijital Albüm - Tüm Hakları Saklıdır</p>
         </div>
     </footer>
 
-    <!-- Sepet Modal -->
-    <div class="cart-modal" id="cart-modal">
-        <div class="cart-header">
-            <h3>Alışveriş Sepetim</h3>
-            <button class="close-cart">×</button>
-        </div>
-        <div class="cart-items" id="cart-items">
-            <!-- Sepet öğeleri buraya dinamik olarak eklenecek -->
-            <p style="text-align: center; padding: 20px;">Sepetinizde ürün bulunmamaktadır.</p>
-        </div>
-        <div class="cart-total">
-            <h3>Toplam: <span id="cart-total-price">0 TL</span></h3>
-            <button class="checkout-btn">Satın Al</button>
-        </div>
-    </div>
-
     <script>
-        // Sepet işlevselliği
-        let cart = [];
-        const cartIcon = document.getElementById('cart-icon');
-        const cartModal = document.getElementById('cart-modal');
-        const cartItems = document.getElementById('cart-items');
-        const cartTotalPrice = document.getElementById('cart-total-price');
-        const cartCount = document.querySelector('.cart-count');
-        
-        // Sepete ürün ekleme
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.getAttribute('data-id');
-                const productName = this.getAttribute('data-name');
-                const productPrice = parseInt(this.getAttribute('data-price'));
-                
-                // Ürünü sepete ekle
-                addToCart(productId, productName, productPrice);
-                
-                // Butonu devre dışı bırak ve metni değiştir
-                this.disabled = true;
-                this.textContent = 'Sepete Eklendi';
-                this.style.backgroundColor = '#27ae60';
-                
-                // 2 saniye sonra eski haline dön
-                setTimeout(() => {
-                    this.disabled = false;
-                    this.textContent = 'Sepete Ekle';
-                    this.style.backgroundColor = '#3498db';
-                }, 2000);
-            });
-        });
-        
-        function addToCart(id, name, price) {
-            // Ürün sepette var mı kontrol et
-            const existingItem = cart.find(item => item.id === id);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: id,
-                    name: name,
-                    price: price,
-                    quantity: 1
-                });
-            }
-            
-            updateCart();
-        }
-        
-        function updateCart() {
-            // Sepet sayacını güncelle
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            
-            // Sepet içeriğini güncelle
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p style="text-align: center; padding: 20px;">Sepetinizde ürün bulunmamaktadır.</p>';
-            } else {
-                cartItems.innerHTML = '';
-                cart.forEach(item => {
-                    const cartItemElement = document.createElement('div');
-                    cartItemElement.className = 'cart-item';
-                    cartItemElement.innerHTML = `
-                        <div class="cart-item-image">
-                            <img src="https://via.placeholder.com/80" alt="${item.name}">
-                        </div>
-                        <div class="cart-item-info">
-                            <h4>${item.name}</h4>
-                            <div class="cart-item-price">${item.price} TL x ${item.quantity}</div>
-                            <button class="remove-item" data-id="${item.id}">Kaldır</button>
-                        </div>
-                    `;
-                    cartItems.appendChild(cartItemElement);
-                });
-                
-                // Kaldır butonlarına event listener ekle
-                document.querySelectorAll('.remove-item').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const itemId = this.getAttribute('data-id');
-                        removeFromCart(itemId);
-                    });
-                });
-            }
-            
-            // Toplam fiyatı güncelle
-            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            cartTotalPrice.textContent = totalPrice + ' TL';
-        }
-        
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
-            updateCart();
-        }
-        
-        // Sepet modalını açma/kapatma
-        cartIcon.addEventListener('click', function(e) {
+        // Basit bir yükleme işlevi (gerçek uygulamada sunucu tarafı işlem gerekir)
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            cartModal.style.display = 'block';
+            
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            const file = document.getElementById('file').files[0];
+            
+            if (!file) {
+                alert('Lütfen bir dosya seçin.');
+                return;
+            }
+            
+            // Burada normalde dosya sunucuya yüklenir
+            // Örnek amaçlı sadece alert gösteriyoruz
+            alert(`Teşekkürler ${name}! Fotoğrafınız yüklendi.`);
+            
+            // Formu temizle
+            document.getElementById('uploadForm').reset();
         });
         
-        document.querySelector('.close-cart').addEventListener('click', function() {
-            cartModal.style.display = 'none';
-        });
+        // Galeri için örnek fotoğraflar ekleme (gerçek uygulamada sunucudan çekilir)
+        function loadGalleryItems() {
+            // Burada normalde sunucudan fotoğraflar çekilir ve galeriye eklenir
+            console.log("Galeri yüklendi");
+        }
         
-        // Mobil menü işlevselliği
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
-        });
-        
-        // Yumuşak kaydırma
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+        // Sayfa yüklendiğinde galeriyi yükle
+        window.addEventListener('DOMContentLoaded', loadGalleryItems);
     </script>
 </body>
 </html>
